@@ -10,6 +10,7 @@
 import React, {useState, useEffect} from 'react';
 import {useMutation, useQuery} from '@apollo/client';
 import gql from 'graphql-tag';
+import client from './Client';
 
 const GET_CUSTOMER_INFO = gql`
     {
@@ -42,9 +43,12 @@ const EditCustomerInformation = () => {
 
     const {data} = useQuery(GET_CUSTOMER_INFO, {
         fetchPolicy: 'network-only',
-        nextFetchPolicy: 'cache-and-network'
+        nextFetchPolicy: 'cache-and-network',
+        client
     });
-    const [updateCustomer, {loading, error}] = useMutation(UPDATE_CUSTOMER_MUTATION);
+    const [updateCustomer, {loading, error}] = useMutation(UPDATE_CUSTOMER_MUTATION, {
+        client
+    });
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error: {error.message}</p>;

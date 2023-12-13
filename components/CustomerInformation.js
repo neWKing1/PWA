@@ -9,7 +9,7 @@
 import React from 'react';
 import { useQuery } from '@apollo/client';
 import gql from 'graphql-tag';
-
+import client from './Client';
 const GET_CUSTOMER_INFO = gql`
     {
         customer {
@@ -26,7 +26,8 @@ const GET_CUSTOMER_INFO = gql`
 function CustomerInformation() {``
     const { loading, error, data } = useQuery(GET_CUSTOMER_INFO, {
         fetchPolicy: 'network-only',
-        nextFetchPolicy: 'cache-and-network'
+        nextFetchPolicy: 'cache-and-network',
+        client
     });
 
     if (loading) return <p>Loading...</p>;

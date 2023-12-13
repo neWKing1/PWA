@@ -12,6 +12,8 @@ import { useMutation } from '@apollo/client';
 import gql from 'graphql-tag';
 import { useHistory } from 'react-router-dom';
 
+
+
 const CUSTOMER_LOGIN = gql`
     mutation CustomerLogin($username: String!, $password: String!) {
         generateCustomerToken(email: $username, password: $password) {
@@ -24,16 +26,17 @@ function Login() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const history = useHistory();
-
     const [customerLogin] = useMutation(CUSTOMER_LOGIN, {
         onCompleted: (data) => {
             // Assuming the token is returned on successful login
             const token = data.generateCustomerToken.token;
             // Perform any necessary actions with the token, e.g., store it in a global state
+            localStorage.setItem('authToken', token);
             // Redirect to the customer information page
             history.push('/customer-information');
         },
     });
+
 
     const handleLogin = () => {
         customerLogin({
