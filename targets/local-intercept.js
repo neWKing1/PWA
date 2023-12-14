@@ -23,6 +23,11 @@ module.exports = targets => {
             pattern: "/customer-information/edit",
             path: require.resolve("../components/EditCustomerInformation.js")
         });
+        routes.push({
+            name: "List Product with Show on PWA Attribute",
+            pattern: "/product/pwa",
+            path: require.resolve("../components/ListProduct.js")
+        });
         return routes;
     });
 };
